@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { pokemon, todo } from "~/server/db/schema";
+import { todo } from "~/server/db/schema";
 
 import { drizzle } from 'drizzle-orm/postgres-js'
 import postgres from 'postgres'
@@ -27,23 +27,6 @@ export const postRouter = createTRPCRouter({
         greeting: `Hello ${input.text}`,
       };
     }),
-
-  // create: publicProcedure
-  //   .input(z.object({ name: z.string().min(1) }))
-  //   .mutation(async ({ ctx, input }) => {
-  //     // simulate a slow db call
-  //     await new Promise((resolve) => setTimeout(resolve, 1000));
-
-  //     await ctx.db.insert(posts).values({
-  //       name: input.name,
-  //     });
-  //   }),
-
-  // getLatest: publicProcedure.query(({ ctx }) => {
-  //   return ctx.db.query.posts.findFirst({
-  //     orderBy: (posts, { desc }) => [desc(posts.createdAt)],
-  //   });
-  // }),
 
   todo: publicProcedure.query(async () => {
     const allTodos = await db.select().from(todo);
